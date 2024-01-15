@@ -1,3 +1,4 @@
+import { isDa } from './message_parsers/da';
 import { isInstagram } from './message_parsers/instagram';
 import { replaceInstagramLink } from './message_responses/instagram';
 
@@ -33,8 +34,13 @@ bot.on('message', (msg) => {
       reply_to_message_id:  msg.message_id,
       disable_web_page_preview: false
     });
+
+    return
   }
 
-  // send a message to the chat acknowledging receipt of their message
-  // bot.sendMessage(chatId, 'Received your message123');
+  if (isDa(msg)) {
+    bot.sendMessage(chatId, 'пизда!', {
+      reply_to_message_id:  msg.message_id,
+    });
+  }
 });
