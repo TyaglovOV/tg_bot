@@ -25,11 +25,14 @@ bot.onText(/\/echo (.+)/, (msg, match) => {
 // Listen for any kind of message. There are different kinds of
 // messages.
 bot.on('message', (msg) => {
+  console.log(msg)
   const chatId = msg.chat.id;
 
   if (isInstagram(msg)) {
-    bot.sendMessage(chatId, replaceInstagramLink(msg));
-    // return
+    bot.sendMessage(chatId, replaceInstagramLink(msg), {
+      reply_to_message_id:  msg.message_id,
+      disable_web_page_preview: false
+    });
   }
 
   // send a message to the chat acknowledging receipt of their message

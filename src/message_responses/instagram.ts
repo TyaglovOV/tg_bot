@@ -5,7 +5,11 @@ export function replaceInstagramLink(inputString: TelegramBot.Message) {
 
   const match = inputString.text.match(instagramRegex)
 
-  const result = match[0].replace(/(https?:\/\/(?:www\.)?instagram\.com\/)([a-zA-Z0-9_]+\/?)/, 'https://www.ddinstagram.com/$2');
+  const result = match.input.replace(/(https?:\/\/(?:www\.)?instagram\.com\/)([a-zA-Z0-9_]+\/?)/, 'https://ddinstagram.com/$2').match(/\b(?:https?|ftp):\/\/[^\s]+\/\S+\b/)
+
+  if (result) {
+    return result[0]
+  }
 
   return result;
 }
