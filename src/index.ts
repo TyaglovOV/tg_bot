@@ -1,6 +1,8 @@
 import { isDa } from './message_parsers/da';
 import { isInstagram } from './message_parsers/instagram';
 import { replaceInstagramLink } from './message_responses/instagram';
+import { isAskForHelp } from './message_parsers/ask_for_help';
+import { askForHelpResponse } from './message_responses/ask_for_help';
 
 const TelegramBot = require('node-telegram-bot-api');
 
@@ -40,6 +42,12 @@ bot.on('message', (msg) => {
 
   if (isDa(msg)) {
     bot.sendMessage(chatId, 'пизда!', {
+      reply_to_message_id:  msg.message_id,
+    });
+  }
+
+  if (isAskForHelp(msg)) {
+    bot.sendMessage(chatId, askForHelpResponse(msg), {
       reply_to_message_id:  msg.message_id,
     });
   }
