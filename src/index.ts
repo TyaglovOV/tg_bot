@@ -4,7 +4,7 @@ import { replaceInstagramLink } from './message_responses/instagram';
 const TelegramBot = require('node-telegram-bot-api');
 
 // replace the value below with the Telegram token you receive from @BotFather
-const token = '763802908:AAFH-PkErw4jvU6K4oujVca-FgSC-qbny0E';
+const token = process.env.KEY;
 
 // Create a bot that uses 'polling' to fetch new updates
 const bot = new TelegramBot(token, { polling: true });
