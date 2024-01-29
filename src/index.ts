@@ -3,6 +3,9 @@ import { isInstagram } from './message_parsers/instagram';
 import { replaceInstagramLink } from './message_responses/instagram';
 import { isAskForHelp } from './message_parsers/ask_for_help';
 import { askForHelpResponse } from './message_responses/ask_for_help';
+import { isAskForWeather } from './message_parsers/weather';
+import { fetchWeatherRequest } from './message_responses/weather';
+import { isMisrali } from './message_parsers/is_misrali';
 
 const TelegramBot = require('node-telegram-bot-api');
 
@@ -27,7 +30,7 @@ bot.onText(/\/echo (.+)/, (msg, match) => {
 
 // Listen for any kind of message. There are different kinds of
 // messages.
-bot.on('message', (msg) => {
+bot.on('message', async (msg) => {
   console.log(msg)
   const chatId = msg.chat.id;
 
@@ -40,10 +43,30 @@ bot.on('message', (msg) => {
     return
   }
 
-  if (isDa(msg)) {
-    bot.sendMessage(chatId, 'пизда!', {
+  if(isAskForWeather(msg)) {
+    const response = await fetchWeatherRequest(msg)
+
+    bot.sendMessage(chatId, response, {
       reply_to_message_id:  msg.message_id,
     });
+
+    return
+  }
+
+  if (isMisrali(msg)) {
+    bot.sendMessage(chatId, '🤮', {
+      reply_to_message_id:  msg.message_id,
+    });
+  }
+
+  if (isDa(msg)) {
+    if (Math.random() < 0.5) {
+      bot.sendMessage(chatId, Math.random() < 0.5 ? 'пизда!' : 'pizda', {
+        reply_to_message_id:  msg.message_id,
+      });
+    }
+
+    return
   }
 
   if (isAskForHelp(msg)) {
