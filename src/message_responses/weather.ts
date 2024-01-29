@@ -4,7 +4,11 @@ import { prepareWeatherInfo } from './weather_utils';
 const axios = require('axios');
 
 function getCityCoords(city: string) {
-  switch (city) {
+  if (!city) {
+    return { lat: 44.816236, lon: 20.460467 }
+  }
+
+  switch (city.toLowerCase()) {
     case 'спб':
     case 'cg,':
     case 'питер':
@@ -50,7 +54,7 @@ export async function fetchWeatherRequest(msg: TelegramBot.Message) {
     }
   }
 
-  const cityCoords = getCityCoords(city ? city.toLowerCase() : 'белград')
+  const cityCoords = getCityCoords(city)
 
   try {
     const response = await axios.get('https://api.weather.yandex.ru/v2/forecast', {
