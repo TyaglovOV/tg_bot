@@ -50,7 +50,7 @@ export async function fetchWeatherRequest(msg: TelegramBot.Message) {
     }
   }
 
-  const cityCoords = getCityCoords(city?.toLowerCase() || 'белград')
+  const cityCoords = getCityCoords(city ? city.toLowerCase() : 'белград')
 
   try {
     const response = await axios.get('https://api.weather.yandex.ru/v2/forecast', {
