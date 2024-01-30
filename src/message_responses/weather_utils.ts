@@ -44,8 +44,10 @@ type WeatherType = {
 }
 
 export function prepareWeatherInfo(data: WeatherType) {
+  const local = data.geo_object.locality?.name || data.geo_object.province?.name
+
   try {
-    return `Погода в г. ${data.geo_object.locality.name === 'округ Белград' ? 'Белград' : data.geo_object.locality.name}, ${data.geo_object.country.name}: за окном ${conditionMapping[data.fact.condition]}, температура ${data.fact.temp}°C, ощущается как ${data.fact.feels_like}°C, ветер ${data.fact.wind_speed} м/с, влажность ${data.fact.humidity}%`
+    return `Погода в г. ${local === 'округ Белград' ? 'Белград' : local}, ${data.geo_object.country.name}: за окном ${conditionMapping[data.fact.condition]}, температура ${data.fact.temp}°C, ощущается как ${data.fact.feels_like}°C, ветер ${data.fact.wind_speed} м/с, влажность ${data.fact.humidity}%`
   }
   catch (e) {
     return 'ошибка парсинга данных'
