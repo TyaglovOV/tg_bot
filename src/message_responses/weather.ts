@@ -42,6 +42,14 @@ function getCityCoords(city: string) {
     case 'белград':
     case ',tkuhfl':
       return { lat: 44.816236, lon: 20.460467 }
+
+    case 'bkk':
+    case ',rr':
+    case 'бкк':
+    case 'илл':
+    case 'бангкок':
+    case ',fyurjr':
+      return { lat: 13.754, lon: 100.501 }
   }
 }
 
